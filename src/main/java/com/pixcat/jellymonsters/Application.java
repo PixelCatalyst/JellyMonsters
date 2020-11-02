@@ -5,7 +5,8 @@ import processing.core.PApplet;
 public class Application extends PApplet {
 
     private final Graphics graphics = new ProcessingGraphics(this);
-    private final Engine engine = new Engine(graphics);
+    private final Input input = new ProcessingInput(this);
+    private final Engine engine = new Engine(graphics, input);
     private GameState gameState = new GameState();
 
     public static void main(String[] args) {
@@ -25,7 +26,7 @@ public class Application extends PApplet {
     @Override
     public void draw() {
         engine.draw(gameState);
-//        engine.handleInput();
-        engine.update();
+        engine.handleInput();
+        gameState = engine.update(gameState);
     }
 }

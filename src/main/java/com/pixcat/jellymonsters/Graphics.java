@@ -1,5 +1,5 @@
 package com.pixcat.jellymonsters;
 
 public interface Graphics {
-    void draw();
+    void text(String text);
 }
