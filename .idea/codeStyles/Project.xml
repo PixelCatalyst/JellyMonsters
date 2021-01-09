@@ -18,5 +18,9 @@
         </value>
       </option>
     </JetCodeStyleSettings>
+    <codeStyleSettings language="JAVA">
+      <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="0" />
+      <option name="BLANK_LINES_AFTER_CLASS_HEADER" value="1" />
+    </codeStyleSettings>
   </code_scheme>
 </component>
