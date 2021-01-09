@@ -7,16 +7,16 @@ public final class Timer {
     private boolean started = false;
     private long lastNanos;
 
-    public float elapsedSeconds() {
+    public Seconds getElapsedSeconds() {
         if (started) {
             final var currentNanos = System.nanoTime();
             final var deltaNanos = currentNanos - lastNanos;
             lastNanos = currentNanos;
-            return (float) deltaNanos / NANOS_IN_SECOND;
+            return Seconds.of((float) deltaNanos / NANOS_IN_SECOND);
         } else {
             started = true;
             lastNanos = System.nanoTime();
-            return 0.0f;
+            return Seconds.zero();
         }
     }
 }
