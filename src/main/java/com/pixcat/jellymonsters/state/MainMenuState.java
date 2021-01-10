@@ -1,4 +1,11 @@
-package com.pixcat.jellymonsters;
+package com.pixcat.jellymonsters.state;
+
+import com.pixcat.jellymonsters.graphics.DrawCommand;
+import com.pixcat.jellymonsters.input.InputState;
+import com.pixcat.jellymonsters.input.KeyCode;
+import com.pixcat.jellymonsters.input.KeyEvent;
+import com.pixcat.jellymonsters.input.KeyState;
+import com.pixcat.jellymonsters.time.Seconds;
 
 import java.util.Collection;
 import java.util.Set;

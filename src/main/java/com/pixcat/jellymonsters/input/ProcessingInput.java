@@ -1,4 +1,4 @@
-package com.pixcat.jellymonsters;
+package com.pixcat.jellymonsters.input;
 
 import processing.core.PConstants;
 

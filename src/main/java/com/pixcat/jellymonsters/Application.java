@@ -1,5 +1,9 @@
 package com.pixcat.jellymonsters;
 
+import com.pixcat.jellymonsters.graphics.ProcessingGraphics;
+import com.pixcat.jellymonsters.input.ProcessingInput;
+import com.pixcat.jellymonsters.state.GameState;
+import com.pixcat.jellymonsters.state.MainMenuState;
 import processing.core.PApplet;
 
 public class Application extends PApplet {

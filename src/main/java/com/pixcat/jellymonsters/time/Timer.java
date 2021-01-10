@@ -1,4 +1,4 @@
-package com.pixcat.jellymonsters;
+package com.pixcat.jellymonsters.time;
 
 public final class Timer {
 

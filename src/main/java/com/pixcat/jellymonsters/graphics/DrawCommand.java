@@ -1,4 +1,4 @@
-package com.pixcat.jellymonsters;
+package com.pixcat.jellymonsters.graphics;
 
 public interface DrawCommand {
 
