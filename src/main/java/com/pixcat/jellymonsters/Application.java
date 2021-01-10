@@ -11,7 +11,7 @@ public class Application extends PApplet {
             new ProcessingGraphics(this),
             processingInput);
 
-    private GameState gameState = new GameState();
+    private GameState gameState = new MainMenuState();
 
     public Application() {
         processingInput.registerObservedKeys(gameState.getObservedKeys());
@@ -34,10 +34,10 @@ public class Application extends PApplet {
     @Override
     public void keyPressed() {
         processingInput.onKeyPressed(keyCode, mouseX, mouseY);
-        disableQuitOnEscape();
+        disableAppQuitOnEscape();
     }
 
-    private void disableQuitOnEscape() {
+    private void disableAppQuitOnEscape() {
         if (key == ESC) {
             key = 0;
         }
@@ -74,5 +74,9 @@ public class Application extends PApplet {
     public void draw() {
         engine.draw(gameState);
         gameState = engine.update(gameState);
+
+        if (gameState == null) {
+            super.exit();
+        }
     }
 }

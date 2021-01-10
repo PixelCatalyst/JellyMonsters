@@ -1,5 +1,13 @@
 package com.pixcat.jellymonsters;
 
-public class GameState {
+import java.util.Collection;
+import java.util.Set;
 
+public interface GameState {
+
+    Collection<DrawCommand> getDrawCommands();
+
+    Set<KeyCode> getObservedKeys();
+
+    GameState update(Seconds delta, InputState inputState);
 }

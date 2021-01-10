@@ -16,9 +16,11 @@ public class Engine {
         graphics.clear(Color.white());
 
         Collection<DrawCommand> drawCommands = gameState.getDrawCommands();
-        for (DrawCommand command : drawCommands) {
-            if (command != null) {
-                command.execute(graphics);
+        if (drawCommands != null) {
+            for (DrawCommand command : drawCommands) {
+                if (command != null) {
+                    command.execute(graphics);
+                }
             }
         }
     }
@@ -30,8 +32,10 @@ public class Engine {
 
         if (newGameState != gameState) {
             gameState = newGameState;
-            gameState.getObservedKeys();
-            input.registerObservedKeys(gameState.getObservedKeys());
+            if (gameState != null) {
+                gameState.getObservedKeys();
+                input.registerObservedKeys(gameState.getObservedKeys());
+            }
         }
         return gameState;
     }

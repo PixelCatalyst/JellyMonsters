@@ -14,7 +14,9 @@ public class ProcessingInput implements Input {
 
     @Override
     public void registerObservedKeys(Set<KeyCode> keys) {
-        observedKeys = new HashSet<>(keys);
+        if (keys != null) {
+            observedKeys = new HashSet<>(keys);
+        }
     }
 
     public void onKeyPressed(int keyCode, int mouseX, int mouseY) {
