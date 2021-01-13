@@ -1,35 +1,77 @@
 package com.pixcat.jellymonsters.state;
 
+import com.pixcat.jellymonsters.Application;
+import com.pixcat.jellymonsters.ApplicationProperties;
 import com.pixcat.jellymonsters.graphics.DrawCommand;
+import com.pixcat.jellymonsters.graphics.DrawImage;
+import com.pixcat.jellymonsters.gui.ActionableButton;
+import com.pixcat.jellymonsters.gui.ImageButton;
+import com.pixcat.jellymonsters.gui.Menu;
 import com.pixcat.jellymonsters.input.InputState;
 import com.pixcat.jellymonsters.input.KeyCode;
 import com.pixcat.jellymonsters.input.KeyEvent;
 import com.pixcat.jellymonsters.input.KeyState;
+import com.pixcat.jellymonsters.resource.Image;
 import com.pixcat.jellymonsters.time.Seconds;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class MainMenuState implements GameState {
+public class TitleScreenState implements GameState {
+
+    Image logo = Application.getResourceLoader().getImage("placeholder_logo.png");
+
+    Menu mainMenu = Menu.builderForViewport(ApplicationProperties.WINDOW_WIDTH)
+            .topMargin(310)
+            .addCenteredButton(
+                    ImageButton.of(
+                            ActionableButton.builderForAction(() -> levelSelectButtonPressed = true)
+                                    .width(200)
+                                    .height(80)
+                                    .build(),
+                            Application.getResourceLoader().getImage("placeholder_button.png")
+                    ))
+            .elementSpacing(50)
+            .addCenteredButton(
+                    ImageButton.of(
+                            ActionableButton.builderForAction(() -> exitButtonPressed = true)
+                                    .width(200)
+                                    .height(80)
+                                    .build(),
+                            Application.getResourceLoader().getImage("placeholder_button.png")
+                    ))
+            .build();
+
+    private boolean levelSelectButtonPressed = false;
+    private boolean exitButtonPressed = false;
 
     @Override
     public Collection<DrawCommand> getDrawCommands() {
-        //TODO
-        return null;
+        DrawCommand drawLogo = new DrawImage(100, 50, logo);
+        return Stream.concat(List.of(drawLogo).stream(), mainMenu.getDrawCommands().stream())
+                .collect(Collectors.toList());
     }
 
     @Override
     public Set<KeyCode> getObservedKeys() {
-        return Set.of(KeyCode.ESCAPE);
+        return Set.of(KeyCode.MOUSE_LEFT);
     }
 
     @Override
     public GameState update(Seconds delta, InputState inputState) {
-        //TODO
         for (KeyEvent ke : inputState.getKeyEvents()) {
-            if (ke.getKeyCode() == KeyCode.ESCAPE && ke.getKeyState() == KeyState.RELEASED) {
-                return null;
+            if ((ke.getKeyCode() == KeyCode.MOUSE_LEFT) && (ke.getKeyState() == KeyState.RELEASED)) {
+                mainMenu.onClick(ke.getMouseX(), ke.getMouseY());
             }
+        }
+
+        if (levelSelectButtonPressed) {
+            return new LevelSelectState();
+        } else if (exitButtonPressed) {
+            return null;
         }
         return this;
     }
