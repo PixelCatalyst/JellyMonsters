@@ -2,37 +2,46 @@ package com.pixcat.jellymonsters;
 
 import com.pixcat.jellymonsters.graphics.ProcessingGraphics;
 import com.pixcat.jellymonsters.input.ProcessingInput;
+import com.pixcat.jellymonsters.resource.ProcessingResourceLoader;
+import com.pixcat.jellymonsters.resource.ResourceLoader;
 import com.pixcat.jellymonsters.state.GameState;
-import com.pixcat.jellymonsters.state.MainMenuState;
+import com.pixcat.jellymonsters.state.TitleScreenState;
 import processing.core.PApplet;
 
 public class Application extends PApplet {
 
-    private static final String WINDOW_TITLE = "Jelly Monsters";
+    private static ResourceLoader resourceLoader;
 
     private final ProcessingInput processingInput = new ProcessingInput();
     private final Engine engine = new Engine(
             new ProcessingGraphics(this),
             processingInput);
 
-    private GameState gameState = new MainMenuState();
-
-    public Application() {
-        processingInput.registerObservedKeys(gameState.getObservedKeys());
-    }
+    private GameState gameState;
 
     public static void main(String[] args) {
         PApplet.main("com.pixcat.jellymonsters.Application");
     }
 
+    public static ResourceLoader getResourceLoader() {
+        return resourceLoader;
+    }
+
     @Override
     public void settings() {
-        size(500, 600);
+        size(ApplicationProperties.WINDOW_WIDTH, ApplicationProperties.WINDOW_HEIGHT);
     }
 
     @Override
     public void setup() {
-        surface.setTitle(WINDOW_TITLE);
+        surface.setTitle(ApplicationProperties.WINDOW_TITLE);
+
+        //resourceLoader and gameState are created here because Processing demands external resources to be loaded
+        //during or after executing setup()
+        resourceLoader = new ProcessingResourceLoader(this);
+
+        gameState = new TitleScreenState();
+        processingInput.registerObservedKeys(gameState.getObservedKeys());
     }
 
     @Override

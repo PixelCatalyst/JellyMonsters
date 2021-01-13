@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.Collection;
 
 @RequiredArgsConstructor
-public class Engine {
+class Engine {
 
     private final Graphics graphics;
     private final Input input;

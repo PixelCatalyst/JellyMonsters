@@ -2,6 +2,8 @@ package com.pixcat.jellymonsters.graphics;
 
 import lombok.RequiredArgsConstructor;
 import processing.core.PApplet;
+import processing.core.PConstants;
+import processing.core.PImage;
 
 @RequiredArgsConstructor
 public class ProcessingGraphics implements Graphics {
@@ -22,5 +24,13 @@ public class ProcessingGraphics implements Graphics {
     @Override
     public void circle(int x, int y, int radius) {
         processing.ellipse(x, y, radius, radius);
+    }
+
+    @Override
+    public void image(int x, int y, int width, int height, int[] pixels) {
+        PImage image = processing.createImage(width, height, PConstants.ARGB);
+        image.pixels = pixels;
+        image.updatePixels();
+        processing.image(image, x, y);
     }
 }
