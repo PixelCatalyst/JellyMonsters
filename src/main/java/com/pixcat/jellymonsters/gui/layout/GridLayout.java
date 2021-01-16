@@ -42,7 +42,8 @@ public class GridLayout implements Layout {
 
     @Override
     public int getHeight() {
-        return 0;
+        final int numberOfRows = (int) Math.ceil(buttons.size() / (double) rowCells);
+        return numberOfRows * (cellSize + cellSpacing) - cellSpacing;
     }
 
     public static GridLayoutBuilder builder() {
