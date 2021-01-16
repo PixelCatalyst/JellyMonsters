@@ -1,6 +1,8 @@
 package com.pixcat.jellymonsters.gui;
 
 import com.pixcat.jellymonsters.graphics.DrawCommand;
+import com.pixcat.jellymonsters.gui.button.Button;
+import com.pixcat.jellymonsters.gui.layout.Layout;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -51,12 +53,11 @@ public class Menu {
             return this;
         }
 
-        public MenuBuilder addCenteredButton(Button button) {
+        public MenuBuilder addButtonsWithLayout(Layout layout) {
             currentY = (currentY == 0 ? topMargin : currentY + elementSpacing);
-            buttons.add(button);
-            button.setX((viewportWidth - button.getWidth()) / 2);
-            button.setY(currentY);
-            currentY += button.getHeight();
+            layout.setViewport(viewportWidth, currentY);
+            buttons.addAll(layout.getButtons());
+            currentY += layout.getHeight();
             return this;
         }
 

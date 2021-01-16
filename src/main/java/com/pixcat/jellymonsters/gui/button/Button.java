@@ -1,4 +1,4 @@
-package com.pixcat.jellymonsters.gui;
+package com.pixcat.jellymonsters.gui.button;
 
 import com.pixcat.jellymonsters.graphics.Drawable;
 

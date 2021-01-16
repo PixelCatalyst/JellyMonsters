@@ -4,9 +4,10 @@ import com.pixcat.jellymonsters.Application;
 import com.pixcat.jellymonsters.ApplicationProperties;
 import com.pixcat.jellymonsters.graphics.DrawCommand;
 import com.pixcat.jellymonsters.graphics.DrawImage;
-import com.pixcat.jellymonsters.gui.ActionableButton;
-import com.pixcat.jellymonsters.gui.ImageButton;
+import com.pixcat.jellymonsters.gui.button.ActionableButton;
+import com.pixcat.jellymonsters.gui.button.ImageButton;
 import com.pixcat.jellymonsters.gui.Menu;
+import com.pixcat.jellymonsters.gui.layout.CenteredLayout;
 import com.pixcat.jellymonsters.input.InputState;
 import com.pixcat.jellymonsters.input.KeyCode;
 import com.pixcat.jellymonsters.input.KeyEvent;
@@ -22,27 +23,27 @@ import java.util.stream.Stream;
 
 public class TitleScreenState implements GameState {
 
-    Image logo = Application.getResourceLoader().getImage("placeholder_logo.png");
+    private final Image logo = Application.getResourceLoader().getImage("placeholder_logo.png");
 
-    Menu mainMenu = Menu.builderForViewport(ApplicationProperties.WINDOW_WIDTH)
+    private final Menu mainMenu = Menu.builderForViewport(ApplicationProperties.WINDOW_WIDTH)
             .topMargin(310)
-            .addCenteredButton(
+            .addButtonsWithLayout(CenteredLayout.of(
                     ImageButton.of(
                             ActionableButton.builderForAction(() -> levelSelectButtonPressed = true)
                                     .width(200)
                                     .height(80)
                                     .build(),
                             Application.getResourceLoader().getImage("placeholder_button.png")
-                    ))
+                    )))
             .elementSpacing(50)
-            .addCenteredButton(
+            .addButtonsWithLayout(CenteredLayout.of(
                     ImageButton.of(
                             ActionableButton.builderForAction(() -> exitButtonPressed = true)
                                     .width(200)
                                     .height(80)
                                     .build(),
                             Application.getResourceLoader().getImage("placeholder_button.png")
-                    ))
+                    )))
             .build();
 
     private boolean levelSelectButtonPressed = false;
