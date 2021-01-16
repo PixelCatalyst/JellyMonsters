@@ -7,6 +7,7 @@ import com.pixcat.jellymonsters.graphics.DrawImage;
 import com.pixcat.jellymonsters.gui.Menu;
 import com.pixcat.jellymonsters.gui.button.ActionableButton;
 import com.pixcat.jellymonsters.gui.button.ImageButton;
+import com.pixcat.jellymonsters.gui.layout.CenteredLayout;
 import com.pixcat.jellymonsters.gui.layout.GridLayout;
 import com.pixcat.jellymonsters.input.InputState;
 import com.pixcat.jellymonsters.input.KeyCode;
@@ -32,13 +33,13 @@ public class LevelSelectState implements GameState {
     private boolean backButtonPressed = false;
 
     public LevelSelectState() {
-        final var gridBuilder = GridLayout.builder()
+        final var levelGridBuilder = GridLayout.builder()
                 .cellSize(60)
                 .cellSpacing(15)
                 .rowCells(5);
         for (int i = 1; i <= NUMBER_OF_LEVELS; ++i) {
             final int levelNumber = i;
-            gridBuilder.addButton(
+            levelGridBuilder.addButton(
                     ImageButton.of(
                             ActionableButton.builderForAction(() -> levelSelected = levelNumber)
                                     .width(60)
@@ -50,7 +51,16 @@ public class LevelSelectState implements GameState {
 
         levelMenu = Menu.builderForViewport(ApplicationProperties.WINDOW_WIDTH)
                 .topMargin(140)
-                .addButtonsWithLayout(gridBuilder.build())
+                .addButtonsWithLayout(levelGridBuilder.build())
+                .elementSpacing(200)
+                .addButtonsWithLayout(CenteredLayout.of(
+                        ImageButton.of(
+                                ActionableButton.builderForAction(() -> backButtonPressed = true)
+                                        .width(200)
+                                        .height(80)
+                                        .build(),
+                                Application.getResourceLoader().getImage("placeholder_button.png"))
+                ))
                 .build();
     }
 
