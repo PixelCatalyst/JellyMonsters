@@ -4,9 +4,9 @@ import com.pixcat.jellymonsters.Application;
 import com.pixcat.jellymonsters.ApplicationProperties;
 import com.pixcat.jellymonsters.graphics.DrawCommand;
 import com.pixcat.jellymonsters.graphics.DrawImage;
+import com.pixcat.jellymonsters.gui.Menu;
 import com.pixcat.jellymonsters.gui.button.ActionableButton;
 import com.pixcat.jellymonsters.gui.button.ImageButton;
-import com.pixcat.jellymonsters.gui.Menu;
 import com.pixcat.jellymonsters.gui.layout.CenteredLayout;
 import com.pixcat.jellymonsters.input.InputState;
 import com.pixcat.jellymonsters.input.KeyCode;
@@ -15,15 +15,14 @@ import com.pixcat.jellymonsters.input.KeyState;
 import com.pixcat.jellymonsters.resource.Image;
 import com.pixcat.jellymonsters.time.Seconds;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TitleScreenState implements GameState {
 
-    private final Image logo = Application.getResourceLoader().getImage("placeholder_logo.png");
+    private final Image background = Application.getResourceLoader().getImage("background.png");
+    private final Image logo = Application.getResourceLoader().getImage("logo.png");
 
     private final Menu mainMenu = Menu.builderForViewport(ApplicationProperties.WINDOW_WIDTH)
             .topMargin(310)
@@ -33,7 +32,7 @@ public class TitleScreenState implements GameState {
                                     .width(200)
                                     .height(80)
                                     .build(),
-                            Application.getResourceLoader().getImage("placeholder_button.png")
+                            Application.getResourceLoader().getImage("button_level_select.png")
                     )))
             .elementSpacing(50)
             .addButtonsWithLayout(CenteredLayout.of(
@@ -42,7 +41,7 @@ public class TitleScreenState implements GameState {
                                     .width(200)
                                     .height(80)
                                     .build(),
-                            Application.getResourceLoader().getImage("placeholder_button.png")
+                            Application.getResourceLoader().getImage("button_exit.png")
                     )))
             .build();
 
@@ -51,9 +50,13 @@ public class TitleScreenState implements GameState {
 
     @Override
     public Collection<DrawCommand> getDrawCommands() {
+        DrawCommand drawBackground = new DrawImage(0, 0, background);
         DrawCommand drawLogo = new DrawImage(100, 50, logo);
-        return Stream.concat(List.of(drawLogo).stream(), mainMenu.getDrawCommands().stream())
-                .collect(Collectors.toList());
+        ArrayList<DrawCommand> commands = new ArrayList<>();
+        commands.add(drawBackground);
+        commands.add(drawLogo);
+        commands.addAll(mainMenu.getDrawCommands());
+        return commands;
     }
 
     @Override
