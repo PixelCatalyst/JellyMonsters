@@ -24,6 +24,7 @@ public class ActionableButton implements Button {
 
     @Getter
     private final int height;
+
     private final Runnable action;
 
     @Override

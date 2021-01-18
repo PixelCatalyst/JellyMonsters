@@ -16,14 +16,22 @@ public class ProcessingGraphics implements Graphics {
     }
 
     @Override
-    public void text(String text) {
+    public void text(int x, int y, String text) {
         processing.fill(0, 0, 0);
-        processing.text(text, 100, 100);
+        processing.text(text, x, y);
     }
 
     @Override
     public void circle(int x, int y, int radius) {
         processing.ellipse(x, y, radius, radius);
+    }
+
+    @Override
+    public void rect(int x, int y, int width, int height, Color color) {
+        processing.fill(color.getRgb());
+        processing.stroke(color.getRgb());
+        processing.noStroke();
+        processing.rect(x, y, width, height);
     }
 
     @Override

@@ -3,14 +3,16 @@ package com.pixcat.jellymonsters.graphics;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class DrawText implements DrawCommand {
+public class DrawRect implements DrawCommand {
 
     private final int x;
     private final int y;
-    private final String text;
+    private final int width;
+    private final int height;
+    private final Color color;
 
     @Override
     public void execute(Graphics graphics) {
-        graphics.text(x, y, text);
+        graphics.rect(x, y, width, height, color);
     }
 }
