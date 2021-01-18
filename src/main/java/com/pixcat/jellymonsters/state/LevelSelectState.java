@@ -16,17 +16,16 @@ import com.pixcat.jellymonsters.input.KeyState;
 import com.pixcat.jellymonsters.resource.Image;
 import com.pixcat.jellymonsters.time.Seconds;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class LevelSelectState implements GameState {
 
     private final static int NUMBER_OF_LEVELS = 10;
 
-    private final Image levelSelectHeader = Application.getResourceLoader().getImage("placeholder_level_select.png");
+    private final Image background = Application.getResourceLoader().getImage("background.png");
+    private final Image levelSelectHeader = Application.getResourceLoader().getImage("level_select.png");
     private final Menu levelMenu;
 
     private int levelSelected = 0;
@@ -45,7 +44,7 @@ public class LevelSelectState implements GameState {
                                     .width(60)
                                     .height(60)
                                     .build(),
-                            Application.getResourceLoader().getImage(String.format("placeholder_level%d.png", i))
+                            Application.getResourceLoader().getImage(String.format("level%d.png", i))
                     ));
         }
 
@@ -59,16 +58,20 @@ public class LevelSelectState implements GameState {
                                         .width(200)
                                         .height(80)
                                         .build(),
-                                Application.getResourceLoader().getImage("placeholder_button.png"))
+                                Application.getResourceLoader().getImage("button_back.png"))
                 ))
                 .build();
     }
 
     @Override
     public Collection<DrawCommand> getDrawCommands() {
+        DrawCommand drawBackground = new DrawImage(0, 0, background);
         DrawCommand drawHeader = new DrawImage(150, 50, levelSelectHeader);
-        return Stream.concat(List.of(drawHeader).stream(), levelMenu.getDrawCommands().stream())
-                .collect(Collectors.toList());
+        ArrayList<DrawCommand> commands = new ArrayList<>();
+        commands.add(drawBackground);
+        commands.add(drawHeader);
+        commands.addAll(levelMenu.getDrawCommands());
+        return commands;
     }
 
     @Override
@@ -87,7 +90,7 @@ public class LevelSelectState implements GameState {
         }
 
         if (levelSelected > 0) {
-            return new LevelLoadState();
+            return new LevelLoadState(levelSelected);
         } else if (backButtonPressed) {
             return new TitleScreenState();
         }
