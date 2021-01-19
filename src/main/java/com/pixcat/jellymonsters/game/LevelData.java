@@ -2,19 +2,13 @@ package com.pixcat.jellymonsters.game;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.pixcat.jellymonsters.graphics.DrawCommand;
-import com.pixcat.jellymonsters.graphics.Drawable;
-import com.pixcat.jellymonsters.gui.button.Button;
 import lombok.Value;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Value
-public class Level implements Drawable {
+public class LevelData {
 
     int ordinalNumber;
     String title;
@@ -25,7 +19,7 @@ public class Level implements Drawable {
     Collection<Monster> monsters;
 
     @JsonCreator
-    public Level(
+    public LevelData(
             @JsonProperty("ordinalNumber") int ordinalNumber,
             @JsonProperty("title") String title,
             @JsonProperty("possibleResults") Set<GameResult> possibleResults,
@@ -40,19 +34,5 @@ public class Level implements Drawable {
         this.starTiles = starTiles;
         this.props = props;
         this.monsters = monsters;
-    }
-
-    @Override
-    public Collection<DrawCommand> getDrawCommands() {
-        ArrayList<Drawable> drawables = new ArrayList<>();
-        drawables.addAll(groundTiles);
-        drawables.addAll(starTiles);
-        drawables.addAll(monsters);
-        drawables.addAll(props);
-        return drawables.stream()
-                .map(Drawable::getDrawCommands)
-                .filter(Objects::nonNull)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
     }
 }

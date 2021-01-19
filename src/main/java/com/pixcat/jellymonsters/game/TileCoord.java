@@ -15,6 +15,10 @@ public class TileCoord {
     int x;
     int y;
 
+    public static TileCoord ofScreenCoord(int screenX, int screenY) {
+        return new TileCoord((screenX - margin) / tileSize, (screenY - margin) / tileSize);
+    }
+
     @JsonCreator
     private TileCoord(@JsonProperty("x") int x, @JsonProperty("y") int y) {
         this.x = x;

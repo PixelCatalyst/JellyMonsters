@@ -7,6 +7,7 @@ import com.pixcat.jellymonsters.graphics.DrawCommand;
 import com.pixcat.jellymonsters.graphics.DrawImage;
 import com.pixcat.jellymonsters.graphics.Drawable;
 import com.pixcat.jellymonsters.resource.Image;
+import lombok.Getter;
 
 import java.util.Collection;
 import java.util.List;
@@ -15,7 +16,9 @@ public class Prop implements Drawable {
 
     private static final int heightMargin = 10;
 
+    @Getter
     private final TileCoord coord;
+
     private final Image image;
 
     @JsonCreator

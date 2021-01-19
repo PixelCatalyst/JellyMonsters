@@ -2,7 +2,7 @@ package com.pixcat.jellymonsters.state;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pixcat.jellymonsters.Application;
-import com.pixcat.jellymonsters.game.Level;
+import com.pixcat.jellymonsters.game.LevelData;
 import com.pixcat.jellymonsters.graphics.DrawCommand;
 import com.pixcat.jellymonsters.graphics.DrawImage;
 import com.pixcat.jellymonsters.input.InputState;
@@ -21,7 +21,7 @@ public class LevelLoadState implements GameState {
     private final ObjectMapper mapper = new ObjectMapper();
 
     private final int levelOrdinalNumber;
-    private Level level;
+    private LevelData levelData;
     private boolean levelLoadScheduled = false;
     private boolean levelLoaded = false;
 
@@ -48,7 +48,7 @@ public class LevelLoadState implements GameState {
     public GameState update(Seconds delta, InputState inputState) {
         scheduleLevelLoad();
         if (levelLoaded) {
-            return new LevelPlayState(level);
+            return new LevelPlayState(levelData);
         }
         return this;
     }
@@ -64,7 +64,7 @@ public class LevelLoadState implements GameState {
     @SneakyThrows
     private void loadLevel() {
         File jsonFile = new File(String.format("level_%d.json", levelOrdinalNumber));
-        level = mapper.readValue(jsonFile, Level.class);
+        levelData = mapper.readValue(jsonFile, LevelData.class);
         levelLoaded = true;
     }
 }
