@@ -2,9 +2,7 @@ package com.pixcat.jellymonsters.game;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.pixcat.jellymonsters.graphics.DrawCircle;
-import com.pixcat.jellymonsters.graphics.DrawCommand;
-import com.pixcat.jellymonsters.graphics.Drawable;
+import com.pixcat.jellymonsters.graphics.*;
 import lombok.Getter;
 
 import java.util.Collection;
@@ -22,7 +20,7 @@ public class Monster implements Drawable {
 
     @Override
     public Collection<DrawCommand> getDrawCommands() {
-        return List.of(new DrawCircle(coord.getScreenX() + 20, coord.getScreenY() + 20, 20));
+        return List.of(new DrawRect(coord.getScreenX() + 5, coord.getScreenY() + 5, 50, 50, Color.of(0xFFAA1010)));
     }
 
     public boolean collision(TileCoord otherCoord) {
